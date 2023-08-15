@@ -22,7 +22,15 @@ int main() {
 
 // -- strcpy
   strcpy(str, s[5]);
+  check(str[0] == '#');
+  check(str[4] == '#');
+  check(str[5] == '\0');
   check(strcmp(str, s[5]) == 0);
+  strcpy(str+5, s[5]);
+  check(str[5] == '#');
+  strcpy(str, s[5]);
+  check(str[4] == '#');
+  check(str[5] == '\0'); // check if copy NUL
 
 // -- strcat
 	check(strcmp( strcat(strcpy(str, str1), s[3]), s[4]) == 0);
