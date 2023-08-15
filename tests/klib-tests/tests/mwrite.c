@@ -184,12 +184,11 @@ void test_strcpy() {
     char *ret = strcpy(pdata, src);
 
     assert(ret == pdata);
-    check_seq(0, str_len, src[0]);
-    assert('\0' == pdata[str_len]);
-
-    check_seq(str_len, DATA_MAX_LEN, str_len+1);
+    check_seq(0, str_len, src[0]);    // [0, str_len)
+    assert('\0' == pdata[str_len]);   // [str_len] == '\0'
+    check_seq(str_len + 1, DATA_MAX_LEN, str_len+2);  // [str_len+1. MAX)
   }
-} // test_memset
+} // test_strcpy
 
 /*
   Type1 内存和字符串的写入函数:
@@ -202,6 +201,8 @@ int main() {
   test_memset();
   test_memcpy();
   test_memmove();
+
+  test_strcpy();
 
 	return 0;
 }
