@@ -100,9 +100,26 @@ void test_memmove() {
     init_data_seq();
     check_seq(0, DATA_MAX_LEN, 1);  // 1..N
 
+  // 完全相交：do-nothing
     init_data_seq();
     memmove(data, data, len);
     check_seq(0, DATA_MAX_LEN, 1);  // 1..N
+
+  // 完全不相交：退化为 memcpy
+    int start = len;  // 确保完全不相交
+    int end = start + len;
+    while (end <= DATA_MAX_LEN) {
+      init_data_seq();
+      memmove(data+start, data, len);
+
+      check_seq(0, start, 1);
+      check_seq(start, end, 1);
+      check_seq(len, start, len + 1);
+      check_seq(end, DATA_MAX_LEN, end + 1);
+
+      start++;
+      end = start + len;
+    }
 
     /*
       check_seq(0, s, 1);
