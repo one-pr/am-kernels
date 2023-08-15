@@ -42,10 +42,13 @@ rrv: run
 rnative: ARCH:=native
 rnative: clean-klib run
 
-rklib-native: ARCH:=native
-rklib-native: KLIB_NATIVE:=1
-rklib-native: clean-klib run
+%-klib-native: ARCH:=native
+%-klib-native: KLIB_NATIVE:=1
+%-klib-native: clean-klib %
 	@printf "Test with native+$(COLOR_GREEN)klib$(COLOR_NONE)\n"
+rklib-native: run-klib-native
+gklib-native: CFLAGS+=-Og -ggdb
+gklib-native: gdb-klib-native
 
 clean-klib:
 	make -C ${AM_HOME}/klib clean
