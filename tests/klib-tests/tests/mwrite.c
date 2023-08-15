@@ -121,12 +121,24 @@ void test_memmove() {
       end = start + len;
     }
 
-    /*
-      check_seq(0, s, 1);
-      check_seq(s, dst, s + 1);
-      check_seq(dst, end, s + 1);
-      check_seq(end, DATA_MAX_LEN, end + 1);
+    /* 确保相交
+              start           end
+              ┌───────────────┐
+          └────────────┴────────────────────┘
+          data         +len                 +MAX_LEN
     */
+    start = 1;
+    end = start + len;
+    while (start < len) {  // 确保一定相交
+      init_data_seq();
+      memmove(data+start, data, len);
+
+      check_seq(0, start, 1);
+      check_seq(start, end, 1);
+      check_seq(end, DATA_MAX_LEN, end + 1);
+      start++;
+      end = start + len;
+    }
   }
   // putstr("[test_memmove] END\n");
 } // test_memmove
