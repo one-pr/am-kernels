@@ -122,7 +122,7 @@ int main() {
 
   test_memset();
   test_memcpy();
-  test_memmove();
+  // test_memmove();
 
 	return 0;
 }

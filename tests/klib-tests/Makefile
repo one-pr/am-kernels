@@ -33,5 +33,6 @@ gdb: all
 
 clean:
 	rm -rf Makefile.* build/
+	make -C ${AM_HOME}/klib clean
 
 latest:
