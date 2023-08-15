@@ -153,6 +153,43 @@ void test_memmove() {
   // putstr("[test_memmove] END\n");
 } // test_memmove
 
+// const int ascii_char_num = 95;
+// /* ASCII 可见字符 95 个 */
+// static const char strbuf[] =
+// // 0~15
+//   " !\"#$%&'()*+,-./"
+// //
+//   "0123456789"
+//   ":;<=>?@"
+//   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+//   "[\\]^_`"
+//   "abcdefghijklmnopqrstuvwxyz"
+//   "{|}~"
+//   ;
+// assert((ascii_char_num+1) == ARRLEN(strbuf));
+
+static const char special_chars[] = " !\"#$%&'()*+,-./";
+static const int special_chars_num = 16;
+// assert((special_chars_num+1) == ARRLEN(special_chars));
+
+void test_strcpy() {
+  char *pdata = (char *)data;
+
+  for (int i=0; i <= special_chars_num; i++) {
+  // 复制越来越少的字符
+    const char *src = special_chars + i;
+    int str_len = special_chars_num - i;  // 最终为 0
+    init_data_seq();
+
+    char *ret = strcpy(pdata, src);
+
+    assert(ret == pdata);
+    check_seq(0, str_len, src[0]);
+    assert('\0' == pdata[str_len]);
+
+    check_seq(str_len, DATA_MAX_LEN, str_len+1);
+  }
+} // test_memset
 
 /*
   Type1 内存和字符串的写入函数:
