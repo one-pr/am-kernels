@@ -64,25 +64,42 @@ void test_strcmp_ne() {
 
 // 无其他依赖的自动化测试
 void test_strcmp() {
+  static char buf[2] = {0};
 // 转义字符
-//   for(int i=0; i < escape_onechar_arr_len; i++) {
-//     assert_equals_with_ctx(1, strcmp(escape_onechar_arr[i]),
-//       printf("ctx: i=%d\n", i));
-//   }
+  for(int i=0; i < escape_onechar_arr_len; i++) {
+    buf[0] = escape_onechar_arr[i][0];
+    buf[1] = '\0';
+    assert_equals_with_ctx(0, strcmp(buf, escape_onechar_arr[i]),
+      printf("ctx: i=%d;\n"
+             "\tbuf   =%s\n"
+             "\tescape=%s\n",
+             i, buf, escape_onechar_arr[i]));
+  }
 
-// // 字符指针
-//   const char *p = ascii_chars;
-//   for(int i=0; i <= ascii_char_len; i++, p++) {
-//     assert_equals_with_ctx(
-//       ascii_char_len-i, strcmp(p),
-//       printf("ctx: i=%d; *p=\"%s\"\n", i, p));
-//   }
-//   p = simple_escape_chars;
-//   for(int i=0; i <= simple_escape_chars_len; i++, p++) {
-//     assert_equals_with_ctx(
-//       simple_escape_chars_len-i, strcmp(p),
-//       printf("ctx: i=%d; *p=\"%s\"\n", i, p));
-//   }
+// 字符指针
+  const char *p = ascii_chars;
+  for(int i=0; i <= ascii_char_len; i++, p++) {
+    assert_equals_with_ctx(
+      0, strcmp(p, p),
+      printf("ctx: i=%d;\n"
+             "\tp = %s\n",
+             i, p));
+  }
+  p = simple_escape_chars;
+  for(int i=0; i <= simple_escape_chars_len; i++, p++) {
+    assert_equals_with_ctx(
+      0, strcmp(p, p),
+      printf("ctx: i=%d;\n"
+             "\tp = %s\n",
+             i, p));
+  }
+
+// NE
+  p = ascii_chars;
+  for(int i=0; i < (ascii_char_len-1); i++, p++) {
+    assert(strcmp(p, p+1) < 0);
+    assert(strcmp(p+1, p) > 0);
+  }
 
 } /* test_strcmp */
 
