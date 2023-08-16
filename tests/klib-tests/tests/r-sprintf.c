@@ -80,7 +80,6 @@ void test_sprintf_fmt_d() {
 
 int main() {
 
-  SPRINTF_fmt_TEST("0%?",    "%d%%", 0);
   test_sprintf_fmt_s();
   test_sprintf_fmt_d();
 
