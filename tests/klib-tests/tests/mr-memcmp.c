@@ -1,4 +1,4 @@
-#include "mem-write.cc"
+#include "test-globals.cc"
 
 #define MEMCMP_TEST(_expected, _str) \
   assert0ret(memcmp(_expected, _str, sizeof(_expected))); \

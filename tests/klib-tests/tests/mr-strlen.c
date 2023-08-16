@@ -1,4 +1,4 @@
-#include "mem-write.cc"
+#include "test-globals.cc"
 
 
 // 简单的手动测试

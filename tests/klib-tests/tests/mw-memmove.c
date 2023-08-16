@@ -1,4 +1,4 @@
-#include "mem-write.cc"
+#include "test-globals.cc"
 
 
 void test_memmove() {
