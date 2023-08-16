@@ -1,35 +1,39 @@
 #include "mem-write.cc"
 
+#define MEMCMP_TEST(_expected, _str) \
+  assert0ret(memcmp(_expected, _str, sizeof(_expected))); \
+  assert0ret(memcmp(_str, _expected, sizeof(_expected)));
 
 // 简单的手动测试
 void test_strcmp_eq() {
-#define MEMCMP_SELF_EQ(_const_str)  assert0ret(memcmp(_const_str, _const_str, sizeof(_const_str)))
+#define MEMCMP_SELF_EQ(_const_str) \
+  assert0ret(memcmp(_const_str, _const_str, sizeof(_const_str)))
 
 // const string
   MEMCMP_SELF_EQ("");
   MEMCMP_SELF_EQ("0");
   MEMCMP_SELF_EQ("1");
 
-//   assert0ret(memcmp(" !\"#$%&'()*+,-./", special_chars));  // <Shift> + <0-9>
-//   assert0ret(memcmp("0123456789", numner_chars));
-//   assert0ret(memcmp("ABCDEFGHIJKLMNOPQRSTUVWXYZ", uppercase_chars));
-//   assert0ret(memcmp("abcdefghijklmnopqrstuvwxyz", lowercase_chars));
+  MEMCMP_TEST(" !\"#$%&'()*+,-./", special_chars);  // <Shift> + <0-9>
+  MEMCMP_TEST("0123456789", numner_chars);
+  MEMCMP_TEST("ABCDEFGHIJKLMNOPQRSTUVWXYZ", uppercase_chars);
+  MEMCMP_TEST("abcdefghijklmnopqrstuvwxyz", lowercase_chars);
   MEMCMP_SELF_EQ(special_chars);
   MEMCMP_SELF_EQ(numner_chars);
   MEMCMP_SELF_EQ(uppercase_chars);
   MEMCMP_SELF_EQ(lowercase_chars);
   MEMCMP_SELF_EQ(simple_escape_chars);
 
-//   for (int i=0; i < escape_onechar_arr_len; i++) {
-//     MEMCMP_SELF_EQ(escape_onechar_arr[i]);
-//   }
+  for (int i=0; i < escape_onechar_arr_len; i++) {
+    MEMCMP_SELF_EQ(escape_onechar_arr[i]);
+  }
 
-// // empty str
-//   assert0ret(memcmp("", empty_str));
-//   assert0ret(memcmp("", empty_strarr[0]));
-//   assert0ret(memcmp("", empty_carr));
-//   assert0ret(memcmp("", empty_null));
-//   assert0ret(memcmp("", zeros_carr));
+// empty str
+  MEMCMP_TEST("", empty_str);
+  MEMCMP_TEST("", empty_strarr[0]);
+  MEMCMP_TEST("", empty_carr);
+  MEMCMP_TEST("", empty_null);
+  MEMCMP_TEST("", zeros_carr);
   MEMCMP_SELF_EQ(empty_str);
   MEMCMP_SELF_EQ(empty_strarr[0]);
   MEMCMP_SELF_EQ(empty_carr);
