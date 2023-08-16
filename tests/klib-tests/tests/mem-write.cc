@@ -85,5 +85,5 @@ static const int uppercase_chars_len = 26;
 static_assert((26+1) == ARRLEN(uppercase_chars));
 
 static const char lowercase_chars[] = "abcdefghijklmnopqrstuvwxyz";
-static const int lowercase_chars_len = 10;
+static const int lowercase_chars_len = 26;
 static_assert((26+1) == ARRLEN(lowercase_chars));
