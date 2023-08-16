@@ -57,6 +57,18 @@ void check_eq(int l, int r, int val) {
 } // check_eq
 
 
+/* ==== 字符串常量 ==== */
+
+__attribute_used__
+static const char *empty_str = "";
+__attribute_used__
+static const char *empty_strarr[1] = { "" };
+static char empty_carr[1] = { 0 };
+static_assert((1) == ARRLEN(empty_carr));
+static char empty_null[1] = { '\0' };
+static_assert((1) == ARRLEN(empty_null));
+static char zeros_carr[8] = { 0 };
+static_assert((8) == ARRLEN(zeros_carr));
 
 /* ASCII 可见字符 95 个 */
 static const char ascii_chars[] =

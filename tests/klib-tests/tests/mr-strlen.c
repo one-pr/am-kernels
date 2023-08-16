@@ -1,14 +1,6 @@
 #include "mem-write.cc"
 
 
-static const char *empty_str = "";
-static const char *empty_strarr[1] = { "" };
-static char empty_carr[1] = { 0 };
-static char empty_null[1] = { '\0' };
-//
-static char zeros_carr[8] = { 0 };
-
-
 // 简单的手动测试
 void test_strlen_trivial() {
 // const string
