@@ -68,42 +68,31 @@ void test_strcmp_ne() {
 
 // 无其他依赖的自动化测试
 void test_strcmp() {
-//   static char buf[2] = {0};
-// // 转义字符
-//   for(int i=0; i < escape_onechar_arr_len; i++) {
-//     buf[0] = escape_onechar_arr[i][0];
-//     buf[1] = '\0';
-//     assert_equals_with_ctx(0, memcmp(buf, escape_onechar_arr[i]),
-//       printf("ctx: i=%d;\n"
-//              "\tbuf   =%s\n"
-//              "\tescape=%s\n",
-//              i, buf, escape_onechar_arr[i]));
-//   }
+  static char buf[2] = {0};
+// 转义字符
+  for(int i=0; i < escape_onechar_arr_len; i++) {
+    buf[0] = escape_onechar_arr[i][0];
+    buf[1] = '\0';
+    MEMCMP_TEST(buf, escape_onechar_arr[i]);
+  }
 
-// // 字符指针
-//   const char *p = ascii_chars;
-//   for(int i=0; i <= ascii_char_len; i++, p++) {
-//     assert_equals_with_ctx(
-//       0, memcmp(p, p),
-//       printf("ctx: i=%d;\n"
-//              "\tp = %s\n",
-//              i, p));
-//   }
-//   p = simple_escape_chars;
-//   for(int i=0; i <= simple_escape_chars_len; i++, p++) {
-//     assert_equals_with_ctx(
-//       0, memcmp(p, p),
-//       printf("ctx: i=%d;\n"
-//              "\tp = %s\n",
-//              i, p));
-//   }
+// 字符指针
+  const char *p = ascii_chars;
+  for(int i=0; i <= ascii_char_len; i++, p++) {
+    assert0ret(memcmp(p, p, ascii_char_len-i));
+  }
+  p = simple_escape_chars;
+  for(int i=0; i <= simple_escape_chars_len; i++, p++) {
+    assert0ret(memcmp(p, p, simple_escape_chars_len-i));
+  }
 
-// // NE
-//   p = ascii_chars;
-//   for(int i=0; i < (ascii_char_len-1); i++, p++) {
-//     assert(memcmp(p, p+1) < 0);
-//     assert(memcmp(p+1, p) > 0);
-//   }
+// NE
+  p = ascii_chars;
+  for(int i=0; i < (ascii_char_len-1); i++, p++) {
+    size_t short_str_len = ascii_char_len-i-1;
+    assert(memcmp(p, p+1, short_str_len) < 0);
+    assert(memcmp(p+1, p, short_str_len) > 0);
+  }
 
 } /* test_strcmp */
 
