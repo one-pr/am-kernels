@@ -17,7 +17,7 @@ void clear_buf() {
 }
 
 // 简单的手动测试
-void test_sprintf_const() {
+void test_sprintf_fmt_s() {
   clear_buf();
 
 #define SPRINTF_fmt_S_TEST(_const_str) \
@@ -46,7 +46,7 @@ void test_sprintf_const() {
   SPRINTF_fmt_S_TEST(zeros_carr);
 
 #undef SPRINTF_fmt_S_TEST
-} /* test_sprintf_const */
+} /* test_sprintf_fmt_s */
 
 
 
@@ -77,7 +77,7 @@ void test_sprintf_fmt_d() {
 
 int main() {
 
-  test_sprintf_const();
+  test_sprintf_fmt_s();
   test_sprintf_fmt_d();
 
 	return 0;
