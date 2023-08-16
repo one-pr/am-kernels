@@ -58,21 +58,20 @@ void check_eq(int l, int r, int val) {
 
 
 
-// const int ascii_char_num = 95;
-// /* ASCII 可见字符 95 个 */
-// static const char strbuf[] =
-// // 0~15
-//   " !\"#$%&'()*+,-./"
-// //
-//   "0123456789"
-//   ":;<=>?@"
-//   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-//   "[\\]^_`"
-//   "abcdefghijklmnopqrstuvwxyz"
-//   "{|}~"
-//   ;
-// assert((ascii_char_num+1) == ARRLEN(strbuf));
+/* ASCII 可见字符 95 个 */
+static const char ascii_chars[] =
+// 0~15
+  " !\"#$%&'()*+,-./"
+  "0123456789"
+  ":;<=>?@"
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  "[\\]^_`"
+  "abcdefghijklmnopqrstuvwxyz"
+  "{|}~"
+  ;
+static const int ascii_char_num = 95;
+static_assert((95+1) == ARRLEN(ascii_chars));
 
 static const char special_chars[] = " !\"#$%&'()*+,-./";
 static const int special_chars_num = 16;
-// assert((special_chars_num+1) == ARRLEN(special_chars));
+static_assert((16+1) == ARRLEN(special_chars));
