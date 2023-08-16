@@ -5,7 +5,7 @@
   assert0ret(memcmp(_str, _expected, sizeof(_expected)));
 
 // 简单的手动测试
-void test_strcmp_eq() {
+void test_memcmp_eq() {
 #define MEMCMP_SELF_EQ(_const_str) \
   assert0ret(memcmp(_const_str, _const_str, sizeof(_const_str)))
 
@@ -41,10 +41,10 @@ void test_strcmp_eq() {
   MEMCMP_SELF_EQ(zeros_carr);
 
 #undef MEMCMP_SELF_EQ
-} /* test_strcmp_eq */
+} /* test_memcmp_eq */
 
 
-void test_strcmp_ne() {
+void test_memcmp_ne() {
 #define MEMCMP_TEST_LT(_expected, _rstr) \
   /* LT */ assert(memcmp(_expected, _rstr, sizeof(_expected)) < 0); \
   /* GT */ assert(memcmp(_rstr, _expected, sizeof(_expected)) > 0)
@@ -63,11 +63,11 @@ void test_strcmp_ne() {
   MEMCMP_TEST_LT(" ", "~");
 
 #undef MEMCMP_TEST_LT
-} /* test_strcmp_ne */
+} /* test_memcmp_ne */
 
 
 // 无其他依赖的自动化测试
-void test_strcmp() {
+void test_memcmp() {
   static char buf[2] = {0};
 // 转义字符
   for(int i=0; i < escape_onechar_arr_len; i++) {
@@ -94,7 +94,7 @@ void test_strcmp() {
     assert(memcmp(p+1, p, short_str_len) > 0);
   }
 
-} /* test_strcmp */
+} /* test_memcmp */
 
 /*
   Type3 内存和字符串的[读取]函数:
@@ -103,10 +103,10 @@ void test_strcmp() {
 */
 int main() {
 
-  test_strcmp_eq();
-  test_strcmp_ne();
+  test_memcmp_eq();
+  test_memcmp_ne();
 
-  test_strcmp();
+  test_memcmp();
 
 	return 0;
 }
