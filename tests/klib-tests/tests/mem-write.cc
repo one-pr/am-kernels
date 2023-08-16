@@ -105,7 +105,6 @@ static const char *escape_onechar_arr[] = {
   "\'", "\"", "\?", "\\",
   "\a", "\b", "\f", "\n", "\r", "\t", "\v",
 // octal-escape-sequence
-  "\000",
   "\001", "\007", "\070", "\077",
 // hexadecimal-escape-sequence
   "\x1", "\x01", "\x0001", "\x00000001",
@@ -115,5 +114,5 @@ static const char *escape_onechar_arr[] = {
 // universal-character-name
   // "\u0020", "\u007E",
 };
-static const int escape_onechar_arr_len = 27+1;
-static_assert((27+1) == ARRLEN(escape_onechar_arr));
+static const int escape_onechar_arr_len = 27;
+static_assert((27) == ARRLEN(escape_onechar_arr));

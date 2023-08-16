@@ -58,7 +58,8 @@ void test_strlen_trivial() {
 void test_strlen() {
 // 转义字符
   for(int i=0; i < escape_onechar_arr_len; i++) {
-    assert_equals(1, strlen(escape_onechar_arr[i]));
+    assert_equals_with_ctx(1, strlen(escape_onechar_arr[i]),
+      printf("ctx: i=%d\n", i));
   }
 
 } /* test_strlen */
