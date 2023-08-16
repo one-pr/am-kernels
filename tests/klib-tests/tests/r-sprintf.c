@@ -1,6 +1,14 @@
 #include <limits.h>
 #include "test-globals.cc"
 
+#define SPRINTF_fmt_TEST(_const_str, _fmt, _str_input) \
+  sprintf(outbuf, _fmt, _str_input); \
+  assert_equals_with_ctx(0, \
+    strcmp(outbuf, _const_str), \
+    printf("\t want = \"%s\"\n" \
+           "\t  got = \"%s\"\n", \
+            _const_str, outbuf))
+// ----------------------------------------------
 
 static char outbuf[512] = {0};
 
@@ -13,8 +21,7 @@ void test_sprintf_const() {
   clear_buf();
 
 #define SPRINTF_fmt_S_TEST(_const_str) \
-  sprintf(outbuf, "%s", _const_str); \
-  assert0ret(strcmp(outbuf, _const_str))
+  SPRINTF_fmt_TEST(_const_str, "%s", _const_str)
 
 // const string
   SPRINTF_fmt_S_TEST("");
@@ -43,17 +50,13 @@ void test_sprintf_const() {
 
 
 
+
 void test_sprintf_fmt_d() {
     clear_buf();
 
 #define SPRINTF_fmt_d_TEST(_const_str, _num) \
-  sprintf(outbuf, "%d", _num); \
-  assert_equals_with_ctx( \
-    0, strcmp(outbuf, _const_str), \
-    printf("\toutbuf = '%s'\n" \
-           "\tconst  = '%s'\n", \
-            outbuf, _const_str));
-// -----------------------------------------------------
+  SPRINTF_fmt_TEST(_const_str, "%d", _num)
+// --------------------------------------------
 
   SPRINTF_fmt_d_TEST("0", 0);
   SPRINTF_fmt_d_TEST("0", -0);
