@@ -72,18 +72,48 @@ static const char ascii_chars[] =
 static const int ascii_char_len = 95;
 static_assert((95+1) == ARRLEN(ascii_chars));
 
+// 初始的特殊符号
 static const char special_chars[] = " !\"#$%&'()*+,-./";
 static const int special_chars_len = 16;
 static_assert((16+1) == ARRLEN(special_chars));
 
+// 数字
 static const char numner_chars[] = "0123456789";
 static const int numner_chars_len = 10;
 static_assert((10+1) == ARRLEN(numner_chars));
 
+// 大写字母
 static const char uppercase_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 static const int uppercase_chars_len = 26;
 static_assert((26+1) == ARRLEN(uppercase_chars));
 
+// 小写字母
 static const char lowercase_chars[] = "abcdefghijklmnopqrstuvwxyz";
 static const int lowercase_chars_len = 26;
 static_assert((26+1) == ARRLEN(lowercase_chars));
+
+// 转义字符.  C11, §A.1.5, (6.4.4.4) simple-escape-sequence:
+static const char simple_escape_chars[] =
+  "\'\"\?\\"
+  "\a\b\f\n\r\t\v"
+  ;
+static const int simple_escape_chars_len = 11;
+static_assert((11+1) == ARRLEN(simple_escape_chars));
+
+static const char *escape_onechar_arr[] = {
+// simple-escape-sequence:
+  "\'", "\"", "\?", "\\",
+  "\a", "\b", "\f", "\n", "\r", "\t", "\v",
+// octal-escape-sequence
+  "\000",
+  "\001", "\007", "\070", "\077",
+// hexadecimal-escape-sequence
+  "\x1", "\x01", "\x0001", "\x00000001",
+  "\xf", "\x0f", "\x000f", "\x0000000f",
+  "\xf", "\xff",
+  "\xF", "\xFF",
+// universal-character-name
+  // "\u0020", "\u007E",
+};
+static const int escape_onechar_arr_len = 27+1;
+static_assert((27+1) == ARRLEN(escape_onechar_arr));

@@ -13,6 +13,7 @@ static char zeros_carr[8] = { 0 };
 void test_strlen_trivial() {
 // const string
   assert(0 == strlen(""));
+
   assert(1 == strlen("0"));
   assert(1 == strlen("1"));
   assert(2 == strlen("10"));
@@ -22,6 +23,7 @@ void test_strlen_trivial() {
   assert(2 == strlen("<>"));
   assert(2 == strlen("''"));
   assert(2 == strlen("\"\""));
+
   assert(4 == strlen("ysyx"));
   assert(5 == strlen("cyhan"));
   assert(6 == strlen("strlen"));
@@ -49,10 +51,15 @@ void test_strlen_trivial() {
   assert(numner_chars_len == strlen(numner_chars));
   assert(uppercase_chars_len == strlen(uppercase_chars));
   assert(lowercase_chars_len == strlen(lowercase_chars));
+  assert(simple_escape_chars_len == strlen(simple_escape_chars));
 } /* test_strlen_trivial */
 
 // 无其他依赖的自动化测试
 void test_strlen() {
+// 转义字符
+  for(int i=0; i < escape_onechar_arr_len; i++) {
+    assert_equals(1, strlen(escape_onechar_arr[i]));
+  }
 
 } /* test_strlen */
 
