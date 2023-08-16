@@ -62,6 +62,20 @@ void test_strlen() {
       printf("ctx: i=%d\n", i));
   }
 
+// 字符指针
+  const char *p = ascii_chars;
+  for(int i=0; i <= ascii_char_len; i++, p++) {
+    assert_equals_with_ctx(
+      ascii_char_len-i, strlen(p),
+      printf("ctx: i=%d; *p=\"%s\"\n", i, p));
+  }
+  p = simple_escape_chars;
+  for(int i=0; i <= simple_escape_chars_len; i++, p++) {
+    assert_equals_with_ctx(
+      simple_escape_chars_len-i, strlen(p),
+      printf("ctx: i=%d; *p=\"%s\"\n", i, p));
+  }
+
 } /* test_strlen */
 
 /*
