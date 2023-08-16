@@ -3,16 +3,26 @@
 
 // 简单的手动测试
 void test_strcmp_eq() {
-// const string
-  assert0ret(strcmp("", ""));
+#define STRCMP_SELF_EQ(_str)  assert0ret(strcmp(_str, _str))
 
-  assert0ret(strcmp("0", "0"));
-  assert0ret(strcmp("1", "1"));
+// const string
+  STRCMP_SELF_EQ("");
+  STRCMP_SELF_EQ("0");
+  STRCMP_SELF_EQ("1");
 
   assert0ret(strcmp(" !\"#$%&'()*+,-./", special_chars));  // <Shift> + <0-9>
   assert0ret(strcmp("0123456789", numner_chars));
   assert0ret(strcmp("ABCDEFGHIJKLMNOPQRSTUVWXYZ", uppercase_chars));
   assert0ret(strcmp("abcdefghijklmnopqrstuvwxyz", lowercase_chars));
+  STRCMP_SELF_EQ(special_chars);
+  STRCMP_SELF_EQ(numner_chars);
+  STRCMP_SELF_EQ(uppercase_chars);
+  STRCMP_SELF_EQ(lowercase_chars);
+  STRCMP_SELF_EQ(simple_escape_chars);
+
+  for (int i=0; i < escape_onechar_arr_len; i++) {
+    STRCMP_SELF_EQ(escape_onechar_arr[i]);
+  }
 
 // empty str
   assert0ret(strcmp("", empty_str));
@@ -20,8 +30,15 @@ void test_strcmp_eq() {
   assert0ret(strcmp("", empty_carr));
   assert0ret(strcmp("", empty_null));
   assert0ret(strcmp("", zeros_carr));
+  STRCMP_SELF_EQ(empty_str);
+  STRCMP_SELF_EQ(empty_strarr[0]);
+  STRCMP_SELF_EQ(empty_carr);
+  STRCMP_SELF_EQ(empty_null);
+  STRCMP_SELF_EQ(zeros_carr);
 
+#undef STRCMP_SELF_EQ
 } /* test_strcmp_eq */
+
 
 void test_strcmp_ne() {
 #define STRCMP_TEST_LT(_lstr, _rstr) \
