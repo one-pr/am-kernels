@@ -72,10 +72,14 @@ void test_sprintf_fmt_d() {
   SPRINTF_fmt_d_TEST("-1",  UINT_MAX);
   SPRINTF_fmt_d_TEST("0",   UINT_MAX+1);
 
+// %
+  SPRINTF_fmt_TEST("0%",    "%d%%", 0);
+  SPRINTF_fmt_TEST("100%",  "%d%%", 100);
 #undef SPRINTF_fmt_d_TEST
 } // test_sprintf_fmt_d
 
 int main() {
+
 
   test_sprintf_fmt_s();
   test_sprintf_fmt_d();
