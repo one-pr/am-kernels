@@ -5,10 +5,10 @@ void test_strcat() {
   char *pdata = (char *)data;
 
 // TODO: 从中间开始复制
-  for (int i=0; i <= special_chars_num; i++) {
+  for (int i=0; i <= special_chars_len; i++) {
   // 复制越来越少的字符
     const char *src = special_chars + i;
-    int str_len = special_chars_num - i;  // 最终为 0
+    int str_len = special_chars_len - i;  // 最终为 0
   // ---- 未使用部分为全 0
     clear_data();
     char *ret = strcat(pdata, src);

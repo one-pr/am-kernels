@@ -4,10 +4,10 @@
 void test_strcpy() {
   char *pdata = (char *)data;
 
-  for (int i=0; i <= special_chars_num; i++) {
+  for (int i=0; i <= special_chars_len; i++) {
   // 复制越来越少的字符
     const char *src = special_chars + i;
-    int str_len = special_chars_num - i;  // 最终为 0
+    int str_len = special_chars_len - i;  // 最终为 0
     init_data_seq();
 
     char *ret = strcpy(pdata, src);

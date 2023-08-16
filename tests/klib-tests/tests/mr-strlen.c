@@ -42,8 +42,8 @@ void test_strlen_trivial() {
   assert(26 == strlen("abcdefghijklmnopqrstuvwxyz"));
 
 // 常量字符串
-  assert(ascii_char_num == strlen(ascii_chars));
-  assert(special_chars_num == strlen(special_chars));
+  assert(ascii_char_len == strlen(ascii_chars));
+  assert(special_chars_len == strlen(special_chars));
 } /* test_strlen_trivial */
 
 // 无其他依赖的自动化测试

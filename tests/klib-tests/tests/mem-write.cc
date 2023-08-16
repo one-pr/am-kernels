@@ -69,9 +69,21 @@ static const char ascii_chars[] =
   "abcdefghijklmnopqrstuvwxyz"
   "{|}~"
   ;
-static const int ascii_char_num = 95;
+static const int ascii_char_len = 95;
 static_assert((95+1) == ARRLEN(ascii_chars));
 
 static const char special_chars[] = " !\"#$%&'()*+,-./";
-static const int special_chars_num = 16;
+static const int special_chars_len = 16;
 static_assert((16+1) == ARRLEN(special_chars));
+
+static const char numner_chars[] = "0123456789";
+static const int numner_chars_len = 10;
+static_assert((10+1) == ARRLEN(numner_chars));
+
+static const char uppercase_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static const int uppercase_chars_len = 26;
+static_assert((26+1) == ARRLEN(uppercase_chars));
+
+static const char lowercase_chars[] = "abcdefghijklmnopqrstuvwxyz";
+static const int lowercase_chars_len = 10;
+static_assert((26+1) == ARRLEN(lowercase_chars));
