@@ -5,8 +5,8 @@
   sprintf(outbuf, _fmt, _str_input); \
   assert_equals_with_ctx(0, \
     strcmp(outbuf, _const_str), \
-    printf("\t want = \"%s\"\n" \
-           "\t  got = \"%s\"\n", \
+    printf("\twant = \"%s\"\n" \
+           "\tgot  = \"%s\"\n", \
             _const_str, outbuf))
 // ----------------------------------------------
 
@@ -80,7 +80,7 @@ void test_sprintf_fmt_d() {
 
 int main() {
 
-
+  SPRINTF_fmt_TEST("0%?",    "%d%%", 0);
   test_sprintf_fmt_s();
   test_sprintf_fmt_d();
 
