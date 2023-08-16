@@ -45,22 +45,22 @@ void test_strcmp_eq() {
 
 
 void test_strcmp_ne() {
-#define MEMCMP_TEST_LT(_lstr, _rstr) \
-  /* LT */ assert(memcmp(_lstr, _rstr) < 0); \
-  /* GT */ assert(memcmp(_rstr, _lstr) > 0)
+#define MEMCMP_TEST_LT(_expected, _rstr) \
+  /* LT */ assert(memcmp(_expected, _rstr, sizeof(_expected)) < 0); \
+  /* GT */ assert(memcmp(_rstr, _expected, sizeof(_expected)) > 0)
 // def MEMCMP_TEST_LT
 
-//   MEMCMP_TEST_LT("", "ysyx");
-//   MEMCMP_TEST_LT("", "cyhan");
+  MEMCMP_TEST_LT("", "ysyx");
+  MEMCMP_TEST_LT("", "cyhan");
 
-// // 可见字符的比较
-//   MEMCMP_TEST_LT(" ", special_chars);
-//   MEMCMP_TEST_LT(special_chars, numner_chars);
-//   MEMCMP_TEST_LT(numner_chars, uppercase_chars);
-//   MEMCMP_TEST_LT(uppercase_chars, lowercase_chars);
-//   MEMCMP_TEST_LT(lowercase_chars, "~");
-// // 传递性
-//   MEMCMP_TEST_LT(" ", "~");
+// 可见字符的比较
+  MEMCMP_TEST_LT(" ", special_chars);
+  MEMCMP_TEST_LT(special_chars, numner_chars);
+  MEMCMP_TEST_LT(numner_chars, uppercase_chars);
+  MEMCMP_TEST_LT(uppercase_chars, lowercase_chars);
+  MEMCMP_TEST_LT(lowercase_chars, "~");
+// 传递性
+  MEMCMP_TEST_LT(" ", "~");
 
 #undef MEMCMP_TEST_LT
 } /* test_strcmp_ne */
