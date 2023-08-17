@@ -68,7 +68,7 @@ void test_strncmp_ne() {
 
 
 // 无其他依赖的自动化测试
-void test_strcmp() {
+void test_strncmp() {
 //   static char buf[2] = {0};
 // // 转义字符
 //   for(int i=0; i < escape_onechar_arr_len; i++) {
@@ -106,7 +106,7 @@ void test_strcmp() {
 //     assert(strcmp(p+1, p) > 0);
 //   }
 
-} /* test_strcmp */
+} /* test_strncmp */
 
 /*
   Type3 内存和字符串的[读取]函数:
@@ -118,7 +118,7 @@ int main() {
   test_strncmp_eq();
   test_strncmp_ne();
 
-  test_strcmp();
+  test_strncmp();
 
 	return 0;
 }
