@@ -43,7 +43,7 @@ void test_strncmp_eq() {
 } /* test_strncmp_eq */
 
 
-void test_strcmp_ne() {
+void test_strncmp_ne() {
 #define STRCMP_TEST_LT(_lstr, _rstr) \
   /* LT */ assert(strncmp(_lstr, _rstr, strlen(_lstr)) < 0); \
            assert(strncmp(_lstr, _rstr, strlen(_rstr)) < 0); \
@@ -53,18 +53,18 @@ void test_strcmp_ne() {
 
   // n==0, 返回值恒为 0
   assert0ret(strncmp("", "ysyx", 0));
-  assert0ret(strncmp(" ", special_chars, 1));   // BUG
+  assert0ret(strncmp(" ", special_chars, 1));
 
 // 可见字符的比较
   STRCMP_TEST_LT(special_chars, numner_chars);
   STRCMP_TEST_LT(numner_chars, uppercase_chars);
   STRCMP_TEST_LT(uppercase_chars, lowercase_chars);
-  // STRCMP_TEST_LT(lowercase_chars, "~");
+  STRCMP_TEST_LT(lowercase_chars, "~");
 // 传递性
   STRCMP_TEST_LT(" ", "~");
 
 #undef STRCMP_TEST_LT
-} /* test_strcmp_ne */
+} /* test_strncmp_ne */
 
 
 // 无其他依赖的自动化测试
@@ -116,7 +116,7 @@ void test_strcmp() {
 int main() {
 
   test_strncmp_eq();
-  test_strcmp_ne();
+  test_strncmp_ne();
 
   test_strcmp();
 
