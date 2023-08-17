@@ -45,21 +45,23 @@ void test_strncmp_eq() {
 
 void test_strcmp_ne() {
 #define STRCMP_TEST_LT(_lstr, _rstr) \
-  /* LT */ assert(strcmp(_lstr, _rstr) < 0); \
-  /* GT */ assert(strcmp(_rstr, _lstr) > 0)
+  /* LT */ assert(strncmp(_lstr, _rstr, strlen(_lstr)) < 0); \
+           assert(strncmp(_lstr, _rstr, strlen(_rstr)) < 0); \
+  /* GT */ assert(strncmp(_rstr, _lstr, strlen(_lstr)) > 0); \
+           assert(strncmp(_rstr, _lstr, strlen(_rstr)) > 0)
 // def STRCMP_TEST_LT
 
-//   STRCMP_TEST_LT("", "ysyx");
-//   STRCMP_TEST_LT("", "cyhan");
+  // n==0, 返回值恒为 0
+  assert0ret(strncmp("", "ysyx", 0));
+  assert0ret(strncmp(" ", special_chars, 1));   // BUG
 
-// // 可见字符的比较
-//   STRCMP_TEST_LT(" ", special_chars);
-//   STRCMP_TEST_LT(special_chars, numner_chars);
-//   STRCMP_TEST_LT(numner_chars, uppercase_chars);
-//   STRCMP_TEST_LT(uppercase_chars, lowercase_chars);
-//   STRCMP_TEST_LT(lowercase_chars, "~");
-// // 传递性
-//   STRCMP_TEST_LT(" ", "~");
+// 可见字符的比较
+  STRCMP_TEST_LT(special_chars, numner_chars);
+  STRCMP_TEST_LT(numner_chars, uppercase_chars);
+  STRCMP_TEST_LT(uppercase_chars, lowercase_chars);
+  // STRCMP_TEST_LT(lowercase_chars, "~");
+// 传递性
+  STRCMP_TEST_LT(" ", "~");
 
 #undef STRCMP_TEST_LT
 } /* test_strcmp_ne */
