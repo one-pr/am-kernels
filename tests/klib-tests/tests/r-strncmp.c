@@ -3,7 +3,10 @@
 
 // 简单的手动测试
 void test_strncmp_eq() {
-#define STRCMP_SELF_EQ(_str)  assert0ret(strncmp(_str, _str, strlen(_str)-1))
+#define STRCMP_SELF_EQ(_str)  \
+  assert0ret(strncmp(_str, _str, strlen(_str)-1)); \
+  assert0ret(strncmp(_str, _str, strlen(_str))); \
+  assert0ret(strncmp(_str, _str, strlen(_str)+1))
 
 // const string
   STRCMP_SELF_EQ("");
