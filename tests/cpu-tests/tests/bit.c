@@ -1,14 +1,16 @@
 #include "trap.h"
 
 typedef unsigned char uint8_t;
-__attribute__((noinline))
+
+__FUNC_NO_INLINE
 bool getbit(void *buf, int offset){
 	int byte = offset >> 3;
 	offset &= 7;
 	uint8_t mask = 1 << offset;
 	return (((uint8_t *)buf)[byte] & mask) != 0;
 }
-__attribute__((noinline))
+
+__FUNC_NO_INLINE
 void setbit(void *buf, int offset, bool bit){
 	int byte = offset >> 3;
 	offset &= 7;
@@ -18,11 +20,13 @@ void setbit(void *buf, int offset, bool bit){
 	*p = (bit == 0 ? (*p & ~mask) : (*p | mask));
 }
 
+
 int main() {
 	uint8_t buf[2];
 
 	buf[0] = 0xaa;
 	buf[1] = 0x0;
+
 	check(getbit(buf, 0) == 0);
 	check(getbit(buf, 1) == 1);
 	check(getbit(buf, 2) == 0);
