@@ -10,4 +10,9 @@ void check(bool cond) {
   if (!cond) halt(1);
 }
 
+__attribute__((noinline))
+void check_ctx(bool cond, int ctx) {
+  if (!cond) halt(ctx);
+}
+
 #endif

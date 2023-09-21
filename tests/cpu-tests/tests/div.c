@@ -5,6 +5,7 @@ int a[N];
 
 int main() {
   int i, j;
+
   for(i = 0; i < N; i ++)
     a[i] = i;
   for(i = 0; i < N; i ++)
@@ -15,7 +16,7 @@ int main() {
       a[i] /= j;
 
   for(i = 0; i < N; i ++)
-    check(a[i] == i);
+    check_ctx(a[i] == i, i);
 
   return 0;
 }
