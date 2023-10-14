@@ -1,6 +1,7 @@
 #include <limits.h>
 #include "test-globals.cc"
 
+
 #define SPRINTF_fmt_TEST(_const_str, _fmt, _str_input) \
   sprintf(outbuf, _fmt, _str_input); \
   assert_equals_with_ctx(0, \
@@ -15,6 +16,7 @@ static char outbuf[512] = {0};
 void clear_buf() {
   memset(outbuf, '\0', 512);
 }
+
 
 // 简单的手动测试
 void test_sprintf_fmt_s() {
@@ -48,9 +50,6 @@ void test_sprintf_fmt_s() {
 #undef SPRINTF_fmt_S_TEST
 } /* test_sprintf_fmt_s */
 
-
-
-
 void test_sprintf_fmt_d() {
     clear_buf();
 
@@ -78,10 +77,32 @@ void test_sprintf_fmt_d() {
 #undef SPRINTF_fmt_d_TEST
 } // test_sprintf_fmt_d
 
+// [%c]
+void test_sprintf_fmt_c() {
+#define SPRINTF_fmt_c_TEST(_const_str, _num) \
+  SPRINTF_fmt_TEST(_const_str, "%c", _num)
+// --------------------------------------------
+
+  clear_buf();
+  SPRINTF_fmt_c_TEST("", 0);
+  SPRINTF_fmt_c_TEST("", -0);
+  SPRINTF_fmt_c_TEST("", 000);
+  SPRINTF_fmt_c_TEST("\0", 0);
+  SPRINTF_fmt_c_TEST("A", 0x41);
+  SPRINTF_fmt_c_TEST("a", 0x61);
+  SPRINTF_fmt_c_TEST("\xff", 0xff);
+
+  SPRINTF_fmt_c_TEST("", 0xff+1);
+
+#undef SPRINTF_fmt_c_TEST
+} // test_sprintf_fmt_c
+
+
 int main() {
 
   test_sprintf_fmt_s();
   test_sprintf_fmt_d();
+  test_sprintf_fmt_c();
 
 	return 0;
 }
