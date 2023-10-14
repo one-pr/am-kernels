@@ -61,6 +61,7 @@ void test_sprintf_fmt_d() {
   SPRINTF_fmt_d_TEST("0", -0);
   SPRINTF_fmt_d_TEST("0", 000);
   SPRINTF_fmt_d_TEST("1", 1);
+  SPRINTF_fmt_d_TEST("-1", -1);
   SPRINTF_fmt_d_TEST("256", 256);
 
   SPRINTF_fmt_d_TEST("-2147483648", INT_MIN);
