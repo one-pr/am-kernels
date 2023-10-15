@@ -47,6 +47,11 @@ void test_atoi_const() {
 void test_strtoi_const() {
 #define strtol_TEST(_ref_val, _str_input) \
   STDLIB_TEST_WARP(strtol(_str_input, NULL, 10), _ref_val, _str_input)
+// 带前缀的测试, 不支持负数
+#define strtol_TEST_PREFIX(_ref_val, _str_input) \
+  strtol_TEST(_ref_val,       "  +" _str_input); \
+  strtol_TEST(-1*(_ref_val),  "  -" _str_input)
+// ----------------------------------------------
 
   strtol_TEST(0, "0");
   strtol_TEST(1, "1");
@@ -54,6 +59,9 @@ void test_strtoi_const() {
   strtol_TEST(512, "512");
   strtol_TEST(1024, "1024");
   strtol_TEST(INT_MAX, "2147483647");
+
+  strtol_TEST(-1, "-1");
+  strtol_TEST(-100, "-100"); // FIXME
 }
 
 
