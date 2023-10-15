@@ -1,15 +1,17 @@
 #include <limits.h>
 #include "test-globals.cc"
 
-#define ATOI_TEST(_ref_val, _str_input) \
-  tmp_ret_val = atoi(_str_input); \
+#define STDLIB_TEST_WARP(_eval_val, _ref_val, _str_input) \
   assert_equals_with_ctx((_ref_val), \
-    tmp_ret_val, \
-    printf("\texpr : \"%s\"\n" \
+    _eval_val, \
+    printf("\tFUNC: %s\n" \
            "\twant = '%d'\n" \
            "\tgot  = '%d'\n", \
-            _str_input, (_ref_val), tmp_ret_val))
+            #_eval_val, \
+            (_ref_val), \
+            _eval_val))
 // ----------------------------------------------
+#define ATOI_TEST(_ref_val, _str_input) STDLIB_TEST_WARP(atoi((_str_input)), _ref_val, _str_input)
 
 // 带前缀的测试, 不支持负数
 #define ATOI_TEST_PREFIX(_ref_val, _str_input) \
@@ -20,8 +22,6 @@
 
 // int atoi(const char *nptr);
 void test_atoi_const() {
-  int tmp_ret_val = 0;
-
   ATOI_TEST_PREFIX(0, "0");
   ATOI_TEST_PREFIX(1, "1");
   ATOI_TEST_PREFIX(123, "123");
@@ -44,10 +44,23 @@ void test_atoi_const() {
   ATOI_TEST(123,  "   123");
 } /* test_atoi_const */
 
+void test_strtoi_const() {
+#define strtol_TEST(_ref_val, _str_input) \
+  STDLIB_TEST_WARP(strtol(_str_input, NULL, 10), _ref_val, _str_input)
+
+  strtol_TEST(0, "0");
+  strtol_TEST(1, "1");
+  strtol_TEST(123, "123");
+  strtol_TEST(512, "512");
+  strtol_TEST(1024, "1024");
+  strtol_TEST(INT_MAX, "2147483647");
+}
+
 
 int main() {
 
   test_atoi_const();
+  test_strtoi_const();
 
 	return 0;
 }
