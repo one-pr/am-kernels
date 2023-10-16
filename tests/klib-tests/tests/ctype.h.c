@@ -1,3 +1,4 @@
+#ifdef USE_KLIB_IMPL
 #include <limits.h>
 #include "test-globals.cc"
 
@@ -29,15 +30,13 @@
 void test_ctypes_char_classification() {
   int tmp_ret_val = INT_MIN;
 
-#define CTYPE_H_TEST_isalnum(__ref_val, __expr) \
-  CTYPE_H_TEST(isalnum, __ref_val, __expr)
 /* int isalnum(int ch) */
-  CTYPE_H_TEST_isalnum(true, '0');
-  CTYPE_H_TEST_isalnum(true, '9');
-  CTYPE_H_TEST_isalnum(true, 'a');
-  CTYPE_H_TEST_isalnum(true, 'z');
-  CTYPE_H_TEST_isalnum(true, 'A');
-  CTYPE_H_TEST_isalnum(true, 'Z');
+  CTYPE_H_TEST(isalnum, true, '0');
+  CTYPE_H_TEST(isalnum, true, '9');
+  CTYPE_H_TEST(isalnum, true, 'a');
+  CTYPE_H_TEST(isalnum, true, 'z');
+  CTYPE_H_TEST(isalnum, true, 'A');
+  CTYPE_H_TEST(isalnum, true, 'Z');
   for (int i = CHAR_MIN; i <= CHAR_MAX; i++) {
     bool is_good = false
       || ('0' <= i && i <= '9')
@@ -188,6 +187,7 @@ void test_ctypes_char_mapping() {
 
 } /* test_ctypes_char_mapping */
 
+
 int main() {
 
   test_ctypes_char_classification();
@@ -195,3 +195,11 @@ int main() {
 
 	return 0;
 }
+
+#else
+
+int main() {
+	return 0;
+}
+
+#endif // USE_KLIB_IMPL
