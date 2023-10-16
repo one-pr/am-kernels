@@ -1,7 +1,7 @@
 #include <limits.h>
 #include "test-globals.cc"
 
-#define STDLIB_TEST_WARP(_eval_val, _ref_val, _str_input) \
+#define STDLIB_TEST_WARP(_eval_val, _ref_val) \
   assert_equals_with_ctx((_ref_val), \
     _eval_val, \
     printf("\tFUNC: %s\n" \
@@ -11,7 +11,8 @@
             (_ref_val), \
             _eval_val))
 // ----------------------------------------------
-#define ATOI_TEST(_ref_val, _str_input) STDLIB_TEST_WARP(atoi((_str_input)), _ref_val, _str_input)
+#define ATOI_TEST(_ref_val, _str_input) \
+  STDLIB_TEST_WARP(atoi((_str_input)), _ref_val)
 
 // 带前缀的测试, 不支持负数
 #define ATOI_TEST_PREFIX(_ref_val, _str_input) \
@@ -46,7 +47,7 @@ void test_atoi_const() {
 
 void test_strtoi_const() {
 #define strtol_TEST(_ref_val, _str_input) \
-  STDLIB_TEST_WARP(strtol(_str_input, NULL, 10), _ref_val, _str_input)
+  STDLIB_TEST_WARP(strtol(_str_input, NULL, 10), _ref_val)
 // 带前缀的测试, 不支持负数
 #define strtol_TEST_PREFIX(_ref_val, _str_input) \
   strtol_TEST(_ref_val,       "  +" _str_input); \
@@ -65,11 +66,11 @@ void test_strtoi_const() {
 }
 
 #define ABS_TEST(_ref_val, _input) \
-  STDLIB_TEST_WARP(  abs((_input)), _ref_val, _input)
+  STDLIB_TEST_WARP(  abs((_input)), _ref_val)
 #define LABS_TEST(_ref_val, _input) \
-  STDLIB_TEST_WARP( labs((_input)), _ref_val, _input)
+  STDLIB_TEST_WARP( labs((_input)), _ref_val)
 #define LLABS_TEST(_ref_val, _input) \
-  STDLIB_TEST_WARP(llabs((_input)), _ref_val, _input)
+  STDLIB_TEST_WARP(llabs((_input)), _ref_val)
 
 #define _ABS_TEST_POS3(_ref_val, _input) \
   ABS_TEST(_ref_val, _input); \
