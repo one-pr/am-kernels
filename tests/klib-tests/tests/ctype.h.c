@@ -14,6 +14,18 @@
 // ----------------------------------------------
 
 
+// 非 ASCII 范围的输入
+#define CTYPE_CHAR_CLASSIFY_BAD_RANGE(__func) \
+  CTYPE_H_TEST(__func, false, 256); \
+  CTYPE_H_TEST(__func, false, 1024); \
+  CTYPE_H_TEST(__func, false, 20231016); \
+  CTYPE_H_TEST(__func, false, INT_MAX); \
+  CTYPE_H_TEST(__func, false, INT_MIN); \
+  CTYPE_H_TEST(__func, false, INT_MIN+1); \
+  CTYPE_H_TEST(__func, false, -4096); \
+  CTYPE_H_TEST(__func, false, -1)
+// CTYPE_CHAR_CLASSIFY_BAD_RANGE
+
 void test_ctypes_char_classification() {
   int tmp_ret_val = INT_MIN;
 
@@ -41,6 +53,7 @@ void test_ctypes_char_classification() {
   for (int i = 0; i < '0'; i++) {
     CTYPE_H_TEST(isalnum, false, i);
   }
+  CTYPE_CHAR_CLASSIFY_BAD_RANGE(isalnum);
 
 /* int isalpha(int ch) */
   CTYPE_H_TEST(isalpha, false, '0');
@@ -61,6 +74,7 @@ void test_ctypes_char_classification() {
       CTYPE_H_TEST(isalpha, false, i);
     }
   }
+  CTYPE_CHAR_CLASSIFY_BAD_RANGE(isalpha);
 
 /* int isblank(int ch) */
   CTYPE_H_TEST(isblank, false, '0');
@@ -76,6 +90,7 @@ void test_ctypes_char_classification() {
   for (int i = '\t'+1; i <= '\r'; i++) {
     CTYPE_H_TEST(isblank, false, i);
   }
+  CTYPE_CHAR_CLASSIFY_BAD_RANGE(isblank);
 
 /* int isdigit(int ch) */
   CTYPE_H_TEST(isdigit, true, '0');
@@ -95,6 +110,7 @@ void test_ctypes_char_classification() {
       CTYPE_H_TEST(isdigit, false, i);
     }
   }
+  CTYPE_CHAR_CLASSIFY_BAD_RANGE(isdigit);
 
 /* int islower(int ch) */
   CTYPE_H_TEST(islower, false, '0');
@@ -110,6 +126,7 @@ void test_ctypes_char_classification() {
   for (int i = 'a'; i <= 'z'; i++) {
     CTYPE_H_TEST(islower, true, i);
   }
+  CTYPE_CHAR_CLASSIFY_BAD_RANGE(islower);
 
 /* int isspace(int ch) */
   CTYPE_H_TEST(isspace, false, '0');
@@ -125,6 +142,7 @@ void test_ctypes_char_classification() {
   for (int i = '\t'; i <= '\r'; i++) {
     CTYPE_H_TEST(isspace, true, i);
   }
+  CTYPE_CHAR_CLASSIFY_BAD_RANGE(isspace);
 
 /* int isupper(int ch) */
   CTYPE_H_TEST(isupper, false, '0');
@@ -140,6 +158,7 @@ void test_ctypes_char_classification() {
   for (int i = 'A'; i <= 'Z'; i++) {
     CTYPE_H_TEST(isupper, true, i);
   }
+  CTYPE_CHAR_CLASSIFY_BAD_RANGE(isupper);
 
 /* int isxdigit(int ch) */
   CTYPE_H_TEST(isxdigit, true, '0');
@@ -162,6 +181,7 @@ void test_ctypes_char_classification() {
       CTYPE_H_TEST(isxdigit, false, i);
     }
   }
+  CTYPE_CHAR_CLASSIFY_BAD_RANGE(isxdigit);
 
 } /* test_ctypes_char_classification */
 
