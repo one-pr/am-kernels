@@ -75,11 +75,17 @@ void test_sprintf_fmt_d() {
 // %
   SPRINTF_fmt_TEST("0%",    "%d%%", 0);
   SPRINTF_fmt_TEST("100%",  "%d%%", 100);
-
+// %2d
   SPRINTF_fmt_TEST("  1%",    "%3d%%", 1);
   SPRINTF_fmt_TEST(" 99%",    "%3d%%", 99);
   SPRINTF_fmt_TEST("100%",    "%3d%%", 100);
   SPRINTF_fmt_TEST("1024%",   "%3d%%", 1024);
+// %02d
+  SPRINTF_fmt_TEST("000%",    "%03d%%", 0);
+  SPRINTF_fmt_TEST("001%",    "%03d%%", 1);
+  SPRINTF_fmt_TEST("099%",    "%03d%%", 99);
+  SPRINTF_fmt_TEST("100%",    "%03d%%", 100);
+  SPRINTF_fmt_TEST("1024%",   "%03d%%", 1024);
 #undef SPRINTF_fmt_d_TEST
 } // test_sprintf_fmt_d
 
