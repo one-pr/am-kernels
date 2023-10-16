@@ -10,4 +10,15 @@ void check(bool cond) {
   if (!cond) halt(1);
 }
 
+#define TEST_WARP(__ref_val, __eval_expr) \
+  assert_equals_with_ctx((__ref_val), \
+    (__eval_expr), \
+    printf("\tFUNC : %s\n" \
+           "\twant = '%d'\n" \
+           "\tgot  = '%d'\n", \
+            #__eval_expr, \
+            (__ref_val), \
+            (__eval_expr)))
+// TEST_WARP
+
 #endif

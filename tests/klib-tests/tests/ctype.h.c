@@ -1,14 +1,14 @@
 #include <limits.h>
 #include "test-globals.cc"
 
-#define CTYPE_H_TEST(__FUNC, __ref_val, __input) \
-  tmp_ret_val = __FUNC((__input)); \
+#define CTYPE_H_TEST(__func, __ref_val, __input) \
+  tmp_ret_val = __func((__input)); \
   assert_equals_with_ctx((__ref_val), \
     tmp_ret_val, \
     printf("\tFUNC: %s( %s(%d) )\n" \
-           "\twant = %s(%d)\n" \
-           "\tgot  = \'%c\'(%d)\n", \
-           TOSTRING(__FUNC), #__input, (__input), \
+           "\twant = '%s'(%d)\n" \
+           "\tgot  = '%c'(%d)\n", \
+           TOSTRING(__func), #__input, (__input), \
            #__ref_val, (__ref_val), \
            tmp_ret_val, tmp_ret_val))
 // ----------------------------------------------
@@ -29,29 +29,22 @@
 void test_ctypes_char_classification() {
   int tmp_ret_val = INT_MIN;
 
+#define CTYPE_H_TEST_isalnum(__ref_val, __expr) \
+  CTYPE_H_TEST(isalnum, __ref_val, __expr)
 /* int isalnum(int ch) */
-  CTYPE_H_TEST(isalnum, true, '0');
-  CTYPE_H_TEST(isalnum, true, '9');
-  CTYPE_H_TEST(isalnum, true, 'a');
-  CTYPE_H_TEST(isalnum, true, 'z');
-  CTYPE_H_TEST(isalnum, true, 'A');
-  CTYPE_H_TEST(isalnum, true, 'Z');
-  CTYPE_H_TEST(isalnum, false, ' ');
-  CTYPE_H_TEST(isalnum, false, '\t');
-  CTYPE_H_TEST(isalnum, false, '\n');
-  CTYPE_H_TEST(isalnum, false, '\0');
-  for (int i = '0'; i <= '9'; i++) {
-    CTYPE_H_TEST(isalnum, true, i);
-  }
-  for (int i = 'a'; i <= 'z'; i++) {
-    CTYPE_H_TEST(isalnum, true, i);
-  }
-  for (int i = 'A'; i <= 'Z'; i++) {
-    CTYPE_H_TEST(isalnum, true, i);
-  }
-
-  for (int i = 0; i < '0'; i++) {
-    CTYPE_H_TEST(isalnum, false, i);
+  CTYPE_H_TEST_isalnum(true, '0');
+  CTYPE_H_TEST_isalnum(true, '9');
+  CTYPE_H_TEST_isalnum(true, 'a');
+  CTYPE_H_TEST_isalnum(true, 'z');
+  CTYPE_H_TEST_isalnum(true, 'A');
+  CTYPE_H_TEST_isalnum(true, 'Z');
+  for (int i = CHAR_MIN; i <= CHAR_MAX; i++) {
+    bool is_good = false
+      || ('0' <= i && i <= '9')
+      || ('A' <= i && i <= 'Z')
+      || ('a' <= i && i <= 'z')
+      ;
+    CTYPE_H_TEST(isalnum, is_good, i);
   }
   CTYPE_CHAR_CLASSIFY_BAD_RANGE(isalnum);
 
@@ -62,33 +55,29 @@ void test_ctypes_char_classification() {
   CTYPE_H_TEST(isalpha, true, 'z');
   CTYPE_H_TEST(isalpha, true, 'A');
   CTYPE_H_TEST(isalpha, true, 'Z');
-  CTYPE_H_TEST(isalpha, false, ' ');
-  CTYPE_H_TEST(isalpha, false, '\t');
-  CTYPE_H_TEST(isalpha, false, '\n');
-  CTYPE_H_TEST(isalpha, false, '\0');
-  for (int i = 0; i <= 255; i++) {
-    if (('a' <= i && i <= 'z')
-        || ('A' <= i && i <= 'Z')) {
-      CTYPE_H_TEST(isalpha, true, i);
-    } else {
-      CTYPE_H_TEST(isalpha, false, i);
-    }
+  for (int i = CHAR_MIN; i <= CHAR_MAX; i++) {
+    bool is_good = false
+      || ('A' <= i && i <= 'Z')
+      || ('a' <= i && i <= 'z')
+      ;
+    CTYPE_H_TEST(isalpha, is_good, i);
   }
   CTYPE_CHAR_CLASSIFY_BAD_RANGE(isalpha);
 
 /* int isblank(int ch) */
-  CTYPE_H_TEST(isblank, false, '0');
-  CTYPE_H_TEST(isblank, false, '9');
-  CTYPE_H_TEST(isblank, false, 'a');
-  CTYPE_H_TEST(isblank, false, 'z');
-  CTYPE_H_TEST(isblank, false, 'A');
-  CTYPE_H_TEST(isblank, false, 'Z');
   CTYPE_H_TEST(isblank, true, ' ');
   CTYPE_H_TEST(isblank, true, '\t');
   CTYPE_H_TEST(isblank, false, '\n');
   CTYPE_H_TEST(isblank, false, '\0');
   for (int i = '\t'+1; i <= '\r'; i++) {
     CTYPE_H_TEST(isblank, false, i);
+  }
+  for (int i = CHAR_MIN; i <= CHAR_MAX; i++) {
+    bool is_good = false
+      || (' ' == i)
+      || ('\t' == i)
+      ;
+    CTYPE_H_TEST(isblank, is_good, i);
   }
   CTYPE_CHAR_CLASSIFY_BAD_RANGE(isblank);
 
@@ -99,16 +88,11 @@ void test_ctypes_char_classification() {
   CTYPE_H_TEST(isdigit, false, 'z');
   CTYPE_H_TEST(isdigit, false, 'A');
   CTYPE_H_TEST(isdigit, false, 'Z');
-  CTYPE_H_TEST(isdigit, false, ' ');
-  CTYPE_H_TEST(isdigit, false, '\t');
-  CTYPE_H_TEST(isdigit, false, '\n');
-  CTYPE_H_TEST(isdigit, false, '\0');
-  for (int i = 0; i <= 255; i++) {
-    if ('0' <= i && i <= '9') {
-      CTYPE_H_TEST(isdigit, true, i);
-    } else {
-      CTYPE_H_TEST(isdigit, false, i);
-    }
+  for (int i = CHAR_MIN; i <= CHAR_MAX; i++) {
+    bool is_good = false
+      || ('0' <= i && i <= '9')
+      ;
+    CTYPE_H_TEST(isdigit, is_good, i);
   }
   CTYPE_CHAR_CLASSIFY_BAD_RANGE(isdigit);
 
@@ -119,28 +103,25 @@ void test_ctypes_char_classification() {
   CTYPE_H_TEST(islower, true, 'z');
   CTYPE_H_TEST(islower, false, 'A');
   CTYPE_H_TEST(islower, false, 'Z');
-  CTYPE_H_TEST(islower, false, ' ');
-  CTYPE_H_TEST(islower, false, '\t');
-  CTYPE_H_TEST(islower, false, '\n');
-  CTYPE_H_TEST(islower, false, '\0');
-  for (int i = 'a'; i <= 'z'; i++) {
-    CTYPE_H_TEST(islower, true, i);
+  for (int i = CHAR_MIN; i <= CHAR_MAX; i++) {
+    bool is_good = false
+      || ('a' <= i && i <= 'z')
+      ;
+    CTYPE_H_TEST(islower, is_good, i);
   }
   CTYPE_CHAR_CLASSIFY_BAD_RANGE(islower);
 
 /* int isspace(int ch) */
-  CTYPE_H_TEST(isspace, false, '0');
-  CTYPE_H_TEST(isspace, false, '9');
-  CTYPE_H_TEST(isspace, false, 'a');
-  CTYPE_H_TEST(isspace, false, 'z');
-  CTYPE_H_TEST(isspace, false, 'A');
-  CTYPE_H_TEST(isspace, false, 'Z');
   CTYPE_H_TEST(isspace, true, ' ');
   CTYPE_H_TEST(isspace, true, '\t');
   CTYPE_H_TEST(isspace, true, '\n');
   CTYPE_H_TEST(isspace, false, '\0');
-  for (int i = '\t'; i <= '\r'; i++) {
-    CTYPE_H_TEST(isspace, true, i);
+  for (int i = CHAR_MIN; i <= CHAR_MAX; i++) {
+    bool is_good = false
+      || (' ' == i)
+      || ('\t' <= i && i <= '\r')
+      ;
+    CTYPE_H_TEST(isspace, is_good, i);
   }
   CTYPE_CHAR_CLASSIFY_BAD_RANGE(isspace);
 
@@ -151,12 +132,11 @@ void test_ctypes_char_classification() {
   CTYPE_H_TEST(isupper, false, 'z');
   CTYPE_H_TEST(isupper, true, 'A');
   CTYPE_H_TEST(isupper, true, 'Z');
-  CTYPE_H_TEST(isupper, false, ' ');
-  CTYPE_H_TEST(isupper, false, '\t');
-  CTYPE_H_TEST(isupper, false, '\n');
-  CTYPE_H_TEST(isupper, false, '\0');
-  for (int i = 'A'; i <= 'Z'; i++) {
-    CTYPE_H_TEST(isupper, true, i);
+  for (int i = CHAR_MIN; i <= CHAR_MAX; i++) {
+    bool is_good = false
+      || ('A' <= i && i <= 'Z')
+      ;
+    CTYPE_H_TEST(isupper, is_good, i);
   }
   CTYPE_CHAR_CLASSIFY_BAD_RANGE(isupper);
 
@@ -164,26 +144,23 @@ void test_ctypes_char_classification() {
   CTYPE_H_TEST(isxdigit, true, '0');
   CTYPE_H_TEST(isxdigit, true, '9');
   CTYPE_H_TEST(isxdigit, true, 'a');
+  CTYPE_H_TEST(isxdigit, true, 'f');
   CTYPE_H_TEST(isxdigit, false, 'z');
   CTYPE_H_TEST(isxdigit, true, 'A');
+  CTYPE_H_TEST(isxdigit, true, 'F');
   CTYPE_H_TEST(isxdigit, false, 'Z');
-  CTYPE_H_TEST(isxdigit, false, ' ');
-  CTYPE_H_TEST(isxdigit, false, '\t');
-  CTYPE_H_TEST(isxdigit, false, '\n');
-  CTYPE_H_TEST(isxdigit, false, '\0');
-  for (int i = 0; i <= 255; i++) {
-    char lo = tolower(i);
-    if ('0' <= i && i <= '9') {
-      CTYPE_H_TEST(isxdigit, true, i);
-    } else if ('a' <= lo && lo <= 'f') {
-      CTYPE_H_TEST(isxdigit, true, i);
-    } else {
-      CTYPE_H_TEST(isxdigit, false, i);
-    }
+  for (int i = CHAR_MIN; i <= CHAR_MAX; i++) {
+    bool is_good = false
+      || ('0' <= i && i <= '9')
+      || ('A' <= i && i <= 'F')
+      || ('a' <= i && i <= 'f')
+      ;
+    CTYPE_H_TEST(isxdigit, is_good, i);
   }
   CTYPE_CHAR_CLASSIFY_BAD_RANGE(isxdigit);
 
 } /* test_ctypes_char_classification */
+
 
 void test_ctypes_char_mapping() {
   int tmp_ret_val = INT_MIN;
