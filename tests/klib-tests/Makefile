@@ -50,9 +50,11 @@ rklib-native: run-klib-native
 gklib-native: CFLAGS+=-Og -ggdb
 gklib-native: gdb-klib-native
 
+clean-am:
+	make -C ${AM_HOME}/am clean
 clean-klib:
 	make -C ${AM_HOME}/klib clean
-clean: clean-klib
+clean: clean-am clean-klib
 	rm -rf Makefile.* build/
 
 latest:
