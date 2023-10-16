@@ -33,7 +33,24 @@ void test_atoi_const() {
 // space prefix
   ATOI_TEST(0,    "   0");
   ATOI_TEST(123,  "   123");
+
+// Stop at decimal
+  ATOI_TEST(0,    "0.001");
+  ATOI_TEST(3,    "3.1415");
+  ATOI_TEST(INT_MAX, "2147483647.9876");
+
+// Stop at char: printf[%02d]
+  ATOI_TEST(2,    "2b");
+  ATOI_TEST(12,   "12s");
+  ATOI_TEST(8,    "8x");
+  ATOI_TEST(16,   "16x");
+
+// bad input
+  ATOI_TEST(0,    "");
+  ATOI_TEST(0,    "-");
+  ATOI_TEST(0,    "abc");
 } /* test_atoi_const */
+
 
 void test_strtoi_const() {
 #define strtol_TEST(__ref_val, _str_input) \
