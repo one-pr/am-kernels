@@ -3,6 +3,7 @@
 Context *simple_trap(Event ev, Context *ctx) {
   switch(ev.event) {
     case EVENT_IRQ_TIMER:
+      putch('\n');
       putch('t'); break;
     case EVENT_IRQ_IODEV:
       putch('d'); break;
