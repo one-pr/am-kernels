@@ -1,4 +1,5 @@
 #include <am.h>
+#include <klib.h>
 #include <klib-macros.h>
 
 // 4K*8=32KB 的堆栈
@@ -25,8 +26,21 @@ static void f(void *arg) {
 
 /* 在进行上下文切换的时候, 只需要把PCB中的cp指针返回给CTE的__am_irq_handle()函数即可 */
 static Context *schedule(Event ev, Context *prev) {
+  assert(prev != NULL);
+  assert(pcb[0].cp != NULL);
+  assert_with_ctx(pcb[1].cp != NULL,
+    printf("current->cp is NULL: \n"
+           "  ev.event = %d\n"
+           "  ev.msg   = %s\n"
+           "  current  = &pcb[%d]\n",
+            ev.event, ev.msg,
+            (current == &pcb[0] ? 0 : 1)));
+
   current->cp = prev;
   current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  assert(current != NULL);
+
+  assert(current->cp != NULL);
   return current->cp;
 }
 
@@ -36,7 +50,9 @@ int main() {
 
   // 为每一个进程维护一个PCB
   pcb[0].cp = kcontext((Area) { pcb[0].stack, &pcb[0] + 1 }, f, (void *)1L);
+  assert(pcb[0].cp != NULL);
   pcb[1].cp = kcontext((Area) { pcb[1].stack, &pcb[1] + 1 }, f, (void *)2L);
+  assert(pcb[1].cp != NULL);
   yield();
 
   panic("Should not reach here!");
